@@ -3,6 +3,7 @@
 #include <termios.h>
 #include <unistd.h>
 #include <signal.h>
+#include "cube_tcp.h"
 
 int* continuity; // 0 for closed, 1 for open. 
 
@@ -42,10 +43,12 @@ void continuity_change (int signo){
 		case 0:
 			*continuity = 1;
 			puts("Baloon is OPEN\n");
+			tcp_printstring("c1");
 			break;
 		default:
 			*continuity = 0;
 			puts("Baloon is CLOSED\n");
+			tcp_printstring("c0");
 	}
 	signal(SIGUSR1, continuity_change);
 }
